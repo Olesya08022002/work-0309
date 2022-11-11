@@ -1,0 +1,136 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');*/
+
+/*@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&family=Poppins&display=swap');*/
+
+
+body{
+	font-family: 'Annie Use Your Telescope', cursive;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: White;
+	font-family: 'Poppins', sans-serif;
+	font-family: 'Roboto', sans-serif;
+	
+}
+
+.container {
+	width: 900px;
+	height: 100hv;
+	background-color: White;
+	margin-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	/*border-right: 1px gray solid;*/
+	/*padding-left: 15px;*/
+	box-sizing: border-box;
+}
+
+p {
+	font-size: 16px;
+}
+
+.logo {
+	margin-left: 0px;
+	width: 100%;
+	background-color: WhiteSmoke;
+	font-size: 58px;
+	font-weight: normal;
+	position: fixed;
+	border-bottom: 1px gray solid;
+	top: 0;
+	margin-top: 0;
+	box-shadow: 0 1px 10px DarkGrey;
+}
+
+.box {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	padding: auto 0;
+	margin: auto 0;
+	vertical-align: center;
+	margin-right: 5px;
+}
+
+.player {
+	position: fixed;
+	display: flex;
+
+	bottom: 0;
+	background-color: WhiteSmoke;
+	width: 100%;
+	padding-top: 10px;
+	border-top: 1px gray solid;
+	margin-top: 0;
+	box-shadow: 0 -1px 10px DarkGrey;
+}
+
+.back, .psbtn, .next, .like, .playStop{
+	border: 1px WhiteSmoke solid;
+	padding: 7px;
+}
+
+.like {
+	color: Silver;
+}
+
+.content {
+	/*padding-top: 10px;*/
+	padding-bottom: 100px;
+}
+
+.curSinger span{
+	padding:  auto 0;
+}
+
+.curSinger {
+	padding: 10px;
+	display: inline-block;
+	font-size: 22px;
+	width: 100%;
+}
+
+.sing {
+	display: flex;
+	height:35px;
+	margin: 5px;
+	padding: 10px;
+	background-color: WhiteSmoke;
+}
+
+.singer {
+	display: inline-block;
+	font-size: 22px;
+	width: 70%;
+}
+
+.singer span{
+	padding:  auto 0;
+}
+
+.nameSong {
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+.album {
+	display: inline-block;
+	font-size: 22px;
+	width: 15%;
+	margin-left: auto;
+	text-align: center;
+}
+
+.author {
+	display: inline-block;
+	font-size: 22px;
+	width: 50%;
+	margin-left: auto;
+	text-align: right;
+	margin-right: 20px;
+}
+
+.likered{
+	color: Crimson;
+}
