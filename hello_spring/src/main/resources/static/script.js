@@ -1,18 +1,33 @@
 var likElem = document.querySelectorAll('.like')
 var playElem = document.querySelectorAll('.psbtn')
-var playStopElem = document.querySelectorAll('.playStop')[0];
-var backElem = document.querySelectorAll('.back')[0];
-var nextElem = document.querySelectorAll('.next')[0];
+var playStopElem = document.querySelectorAll('.playStop')[0]
+var backElem = document.querySelectorAll('.back')[0]
+var nextElem = document.querySelectorAll('.next')[0]
 
-var playing = false;
-var audio;
+var playing = false
+var audio
 
-var curID = 0;
-var curState = false;
+var curID = 0
+var curState = false
 
+updateListLike();
+
+function updateListLike () {
+    $.ajax({
+      url: "http://localhost:8080/getMusicData",
+      method: "GET",
+      success: function(data) {
+        data.map((value, i) => {
+            if (value.like === true) {
+                likElem[i].classList.toggle("like")
+                likElem[i].classList.toggle("likered")
+           }
+        })
+      }
+    })
+}
 
 playStopElem.addEventListener("click", function(){
-	//alert("aaaa");
 	let playElemTemp = document.querySelectorAll('.psbtn')
 		
 	if (curID === 0) {
@@ -21,7 +36,6 @@ playStopElem.addEventListener("click", function(){
 		
 		this.classList.toggle('fa-pause')
 		this.classList.toggle('fa-play')
-		
 	} else {
 		playElemTemp[curID].classList.toggle('fa-pause')
 		playElemTemp[curID].classList.toggle('fa-play')
@@ -29,42 +43,13 @@ playStopElem.addEventListener("click", function(){
 		this.classList.toggle('fa-play')
 		this.classList.toggle('fa-pause')
 	}
-	/*if (curState != true) {
-		ss = './audio/'+data[0].pathName+'.mp3'
-		audio = new Audio(ss);
-		audio.play();
-		playing = true;
-		curID = data[0].id;
-		curState = true;
-		curPlayElem = document.querySelectorAll('.psbtn')[0];
-		
-		curPlayElem.classList.remove('fa-play')
-		curPlayElem.classList.add('fa-pause')
-		
-		this.classList.add('fa-pause')
-		this.classList.remove('fa-play')
-	} else {
-		audio.pause();
-		this.classList.add('fa-play')
-		this.classList.remove('fa-pause')
-				
-		playing = false;
-		curPlayElem = document.querySelectorAll('.psbtn')[0];
-		curPlayElem.classList.remove('fa-pause')
-		curPlayElem.classList.add('fa-play')
-	}*/
 })
-
 
 backElem.addEventListener("click", function(){
 	len= playElem.length - 1
 	elem = document.querySelectorAll('.psbtn')
 	if(curID <= len){
 		if(curID === 0) {
-			//tempNext = document.querySelectorAll('.back')[0];
-			//tempNext.classList.remove('fa-fast-backward')
-			//elem[curID].classList.toggle('fa-pause')
-			//elem[curID].classList.toggle('fa-play')
 		} else{
 			elem[curID].classList.toggle('fa-pause')
 			elem[curID].classList.toggle('fa-play')
@@ -73,11 +58,8 @@ backElem.addEventListener("click", function(){
 			elem[curID].classList.toggle('fa-play')
 		}
 	} else {
-	
 		elem[curID].classList.toggle('fa-pause')
 		elem[curID].classList.toggle('fa-play')
-		//tempNext = document.querySelectorAll('.back')[0];
-		//tempNext.classList.remove('fa-fast-backward')
 	}
 	
 	let name = elem[curID].getAttribute('data-name')
@@ -86,7 +68,6 @@ backElem.addEventListener("click", function(){
 		
 	elem = document.querySelectorAll('.curSinger')[0];
 	elem.innerHTML="<span>"+author+"</span> - <span>"+nameSong+"</span>"
-	
 });
 
 nextElem.addEventListener("click", function(){
@@ -106,11 +87,6 @@ nextElem.addEventListener("click", function(){
 			elem[curID].classList.toggle('fa-pause')
 			elem[curID].classList.toggle('fa-play')
 		}
-	} else {
-		//elem[curID].classList.toggle('fa-pause')
-		//elem[curID].classList.toggle('fa-play')
-		//tempNext = document.querySelectorAll('.next')[0];
-		//tempNext.classList.remove('fa-fast-forward')
 	}
 	
 	let name = elem[curID].getAttribute('data-name')
@@ -124,20 +100,29 @@ nextElem.addEventListener("click", function(){
 
 for (let i = 0; i < likElem.length; i++){
 	likElem[i].addEventListener("click", function(){
-		likElem[i].classList.toggle("likered");
+
+		let nameSong =  likElem[i].getAttribute('data-name-song')
+		let like = !likElem[i].classList.contains("likered")
+
+        $.ajax({
+          url: "http://localhost:8080/setLike?name="+nameSong+"&like=" + like,
+          method: "GET",
+          success: function( result ) {
+		    likElem[i].classList.toggle("likered")
+          }
+        })
 	})
 }
 
 
 function setData(ctx) {
 	let name = ctx.getAttribute('data-name')
-		let author = ctx.getAttribute('data-name-author')
-		let nameSong = ctx.getAttribute('data-name-song')
+	let author = ctx.getAttribute('data-name-author')
+	let nameSong = ctx.getAttribute('data-name-song')
 		
-		elem = document.querySelectorAll('.curSinger')[0];
-		elem.innerHTML=""
-		elem.innerHTML="<span>"+author+"</span> - <span>"+nameSong+"</span>"
-		
+	elem = document.querySelectorAll('.curSinger')[0]
+	elem.innerHTML=""
+	elem.innerHTML="<span>"+author+"</span> - <span>"+nameSong+"</span>"
 }
 
 for (let i = 0; i < playElem.length; i++){
@@ -154,69 +139,57 @@ for (let i = 0; i < playElem.length; i++){
 		let author = this.getAttribute('data-name-author')
 		let nameSong = this.getAttribute('data-name-song')
 		
-		elem = document.querySelectorAll('.curSinger')[0];
+		elem = document.querySelectorAll('.curSinger')[0]
 		elem.innerHTML=""
 		elem.innerHTML="<span>"+author+"</span> - <span>"+nameSong+"</span>"
-		
-		//alert(curAut)
+
 		if(playing){
 			if(audio.getAttribute('src') === './audio/'+name+'.mp3'){
-				//audio.pause();
 				this.classList.add('fa-play')
 				this.classList.remove('fa-pause')
 				playStopElem.classList.add('fa-play')
 				playStopElem.classList.remove('fa-pause')
-				playing = false;
+				playing = false
 			}else{
-				//audio.pause();
 				this.classList.add('fa-play')
 				this.classList.remove('fa-pause')
 				playStopElem.classList.add('fa-play')
 				playStopElem.classList.remove('fa-pause')
-				delete audio;
-				playing = false;
-				//audio = new Audio('./audio/'+name+'.mp3');
+				delete audio
+				playing = false
 				this.classList.remove('fa-play')
 				this.classList.add('fa-pause')
 				playStopElem.classList.remove('fa-play')
 				playStopElem.classList.add('fa-pause')
-				//audio.play();
-				playing = true;
+				playing = true
 			}
 		}else{
-			//уже есть песня
 			if(audio != undefined){
 				if(audio.getAttribute('src') === './audio/'+name+'.mp3'){
 					this.classList.remove('fa-play')
 					this.classList.add('fa-pause')
 					playStopElem.classList.remove('fa-play')
 					playStopElem.classList.add('fa-pause')
-					//audio.play();
-					playing = true;
+					playing = true
 				}else{
-					//audio.pause();
 					this.classList.add('fa-play')
 					this.classList.remove('fa-pause')
 					playStopElem.classList.add('fa-play')
 					playStopElem.classList.remove('fa-pause')
-					delete audio;
-					playing = false;
-					//audio = new Audio('./audio/'+name+'.mp3');
-					//audio.play();
+					delete audio
+					playing = false
 					this.classList.remove('fa-play')
 					this.classList.add('fa-pause')
 					playStopElem.classList.remove('fa-play')
 					playStopElem.classList.add('fa-pause')
-					playing = true;
+					playing = true
 				}
 			}else{
-				//audio = new Audio('./audio/'+name+'.mp3');
 				this.classList.remove('fa-play')
 				this.classList.add('fa-pause')
 				playStopElem.classList.remove('fa-play')
 				playStopElem.classList.add('fa-pause')
-				//audio.play();
-				playing = true;
+				playing = true
 			}
 		}
 		for (let i = 0; i < playElemTemp.length; i++){
@@ -227,7 +200,7 @@ for (let i = 0; i < playElem.length; i++){
 		
 		len= playElem.length - 1
 		if (curID < len){
-			tempNext = document.querySelectorAll('.next')[0];
+			tempNext = document.querySelectorAll('.next')[0]
 			tempNext.classList.add('fa-fast-forward')
 		}
 	})
