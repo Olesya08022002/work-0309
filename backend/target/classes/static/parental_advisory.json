@@ -1,0 +1,31 @@
+[ {
+  "id" : null,
+  "album" : "ALBUM",
+  "name" : "Mr.Jacson",
+  "singer" : "Outkast",
+  "like" : null
+}, {
+  "id" : null,
+  "album" : "ALBUM",
+  "name" : "Footprints",
+  "singer" : "Tom Gregory",
+  "like" : null
+}, {
+  "id" : null,
+  "album" : "ALBUM",
+  "name" : "Life Goes On",
+  "singer" : "Oliver Tree",
+  "like" : null
+}, {
+  "id" : null,
+  "album" : "ALBUM",
+  "name" : "Move Your Body",
+  "singer" : "Sia",
+  "like" : null
+}, {
+  "id" : null,
+  "album" : "ALBUM",
+  "name" : "Butterfly",
+  "singer" : "Crazy Town",
+  "like" : null
+} ]

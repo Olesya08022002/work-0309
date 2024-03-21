@@ -1,0 +1,79 @@
+[ {
+  "id" : 1,
+  "album" : "ALBUM",
+  "name" : "Mr.Jacson",
+  "singer" : "Outkast",
+  "like" : false
+}, {
+  "id" : 2,
+  "album" : "ALBUM",
+  "name" : "You Get Me So High",
+  "singer" : "The Neighbourhood",
+  "like" : false
+}, {
+  "id" : 3,
+  "album" : "ALBUM",
+  "name" : "Footprints",
+  "singer" : "Tom Gregory",
+  "like" : false
+}, {
+  "id" : 4,
+  "album" : "ALBUM",
+  "name" : "Good To Go",
+  "singer" : "Klangkarussell",
+  "like" : false
+}, {
+  "id" : 5,
+  "album" : "ALBUM",
+  "name" : "Mountains",
+  "singer" : "LSD feat. Sia, Diplo",
+  "like" : false
+}, {
+  "id" : 6,
+  "album" : "ALBUM",
+  "name" : "Get Free",
+  "singer" : "Major Lazer",
+  "like" : false
+}, {
+  "id" : 7,
+  "album" : "ALBUM",
+  "name" : "Big City Life",
+  "singer" : "Mattafix",
+  "like" : false
+}, {
+  "id" : 8,
+  "album" : "ALBUM",
+  "name" : "Clouds",
+  "singer" : "Kayne",
+  "like" : true
+}, {
+  "id" : 9,
+  "album" : "ALBUM",
+  "name" : "Life Goes On",
+  "singer" : "Oliver Tree",
+  "like" : true
+}, {
+  "id" : 10,
+  "album" : "ALBUM",
+  "name" : "Move Your Body",
+  "singer" : "Sia",
+  "like" : true
+}, {
+  "id" : 11,
+  "album" : "ALBUM",
+  "name" : "Butterfly",
+  "singer" : "Crazy Town",
+  "like" : true
+}, {
+  "id" : 12,
+  "album" : "ALBUM",
+  "name" : "Nightcall",
+  "singer" : "Kavinsky",
+  "like" : false
+}, {
+  "id" : 13,
+  "album" : "ALBUM",
+  "name" : "Unstoppable",
+  "singer" : "Sia",
+  "like" : false
+} ]
