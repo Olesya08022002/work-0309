@@ -6,76 +6,75 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 public class LikeController {
-    @GetMapping("/setLike")
-    public Boolean getAudio(@RequestParam(value = "name") String name,
-                            @RequestParam(value = "like") Boolean like) throws IOException {
+    @CrossOrigin("*")
+    @PostMapping("/setLike")
+    public Map<String, Boolean> setLike(@RequestBody Music[] updatedArrMusic) throws IOException {
 
         String path = new File(getClass().getClassLoader().getResource("static").getPath()).toString();
+        File file = new File(path + "/data.json");
 
-        InputStream is = LikeController.class.getResourceAsStream("/static/data.json");
         ObjectMapper objectMapper = new ObjectMapper();
-        Music[] arrMusic = objectMapper.readValue(is, Music[].class);
-
-        for(int i = 0; i < arrMusic.length; i++) {
-            if (arrMusic[i].getName().equals(name)) {
-                arrMusic[i].setLike(like);
-                break;
-            }
-        }
 
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(new File(path + "\\data.json"), arrMusic);
-        return true;
-    }
-
-    @GetMapping("/getMusicData")
-    public Music[] getMusicData() throws IOException {
-        InputStream is = LikeController.class.getResourceAsStream("/static/data.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        Music[] arrMusic = objectMapper.readValue(is, Music[].class);
-        return arrMusic;
-    }
-
-    @RequestMapping(value="/setReport", method= RequestMethod.GET)
-    public ResponseEntity<?> setReport(@RequestParam("name") String name,
-                                       @RequestParam("singer") String singer,
-                                       @RequestParam("album") String album) throws IOException {
-        String path = new File(getClass().getClassLoader().getResource("static").getPath()).toString();
-
-        InputStream is = LikeController.class.getResourceAsStream("/static/parental_advisory.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Music> listMusic = new ArrayList<>(Arrays.asList(objectMapper.readValue(is, Music[].class)));
-
-        boolean contains = listMusic.stream().anyMatch(i -> (i.getName().contains(name) &&
-                i.getSinger().contains(singer)) && i.getAlbum().contains(album));
-
-        //boolean contains = false;
-        /*for(Music item : listMusic){
-            if((item.getName().equals(name)) && (item.getAlbum().equals(album)) && (item.getSinger().equals(singer))){
-                contains = true;
-                break;
-            }
-        }*/
-
-        if (contains) {
-            return ResponseEntity.ok("ОШИБКА отправки жалобы! Жалоба УЖЕ существует");
+        try (FileOutputStream os = new FileOutputStream(file)) {
+            writer.writeValue(os, updatedArrMusic);
         }
-        Music musicItem = new Music(album, name, singer);
 
-        listMusic.add(musicItem);
 
-        ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(new File(path + "\\parental_advisory.json"), listMusic);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("success", true);
 
-        return ResponseEntity.ok("Жалоба успешно отправлена!");
+        return response;
+
     }
-}
+
+        @CrossOrigin("*")
+        @PostMapping(value="/setReport")
+        public ResponseEntity<?> setReport(@RequestParam("name") String name,
+                                           @RequestParam("singer") String singer,
+                                           @RequestParam("album") String album) throws IOException {
+            String path = new File(getClass().getClassLoader().getResource("static").getPath()).toString();
+
+            InputStream is = LikeController.class.getResourceAsStream("/static/parental_advisory.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Music> listMusic = new ArrayList<>(Arrays.asList(objectMapper.readValue(is, Music[].class)));
+
+            boolean contains = listMusic.stream().anyMatch(i -> (i.getName().contains(name) &&
+                    i.getSinger().contains(singer)) && i.getAlbum().contains(album));
+
+
+            /*for(Music item : listMusic){
+                if((item.getName().equals(name)) && (item.getAlbum().equals(album)) && (item.getSinger().equals(singer))){
+                    contains = true;
+                    break;
+                }
+            }*/
+
+            if (contains) {
+                return ResponseEntity.ok("ОШИБКА отправки жалобы! Жалоба УЖЕ существует");
+            }
+            Music musicItem = new Music(album, name, singer);
+
+            listMusic.add(musicItem);
+
+            ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(new File(path + "\\parental_advisory.json"), listMusic);
+
+            return ResponseEntity.ok("Жалоба успешно отправлена!");
+        }
+    }
