@@ -13,8 +13,33 @@ import java.util.stream.Collectors;
 @Controller
 public class MusicController {
 
+    @CrossOrigin("*")
     @RequestMapping("/")
+    @ResponseBody
     public String getMusic (Model model) throws IOException {
+
+        InputStream is = LikeController.class.getResourceAsStream("/static/data.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Music[] arrMusic = objectMapper.readValue(is, Music[].class);
+
+        List<Music> result = Arrays.stream(arrMusic)
+                .collect(Collectors.toList());
+
+        /*
+               List<Music> result = Arrays.stream(arrMusic)
+                .filter(i -> i.getLike())
+                .collect(Collectors.toList());
+        */
+
+        String jsonResponse = objectMapper.writeValueAsString(result);
+
+        return jsonResponse;
+    }
+
+    @CrossOrigin("*")
+    @RequestMapping("/getLikedMusic")
+    @ResponseBody
+    public String getLikedMusic (Model model) throws IOException {
 
         InputStream is = LikeController.class.getResourceAsStream("/static/data.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -24,8 +49,11 @@ public class MusicController {
                 .filter(i -> i.getLike())
                 .collect(Collectors.toList());
 
-        model.addAttribute("musics", result);
-        return "music";
+
+
+        String jsonResponse = objectMapper.writeValueAsString(result);
+
+        return jsonResponse;
     }
 
     @RequestMapping("/index")

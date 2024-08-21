@@ -14,10 +14,10 @@ body{
 }
 
 .container {
-	width: 900px;
+	/*width: 900px;*/
 	height: 100hv;
 	background-color: White;
-	margin-left: 0;
+	margin-right: 30%;
 	margin-top: 0;
 	margin-bottom: 0;
 	box-sizing: border-box;
@@ -40,15 +40,7 @@ p {
 	box-shadow: 0 1px 10px DarkGrey;
 }
 
-.box {
-	width: 32px;
-	height: 32px;
-	display: inline-block;
-	padding: auto 0;
-	margin: auto 0;
-	vertical-align: center;
-	margin-right: 5px;
-}
+
 
 .player {
 	position: fixed;
@@ -75,6 +67,10 @@ p {
 .content {
 	/*padding-top: 10px;*/
 	padding-bottom: 100px;
+	display: grid;
+	grid-auto-rows: minmax(45px, auto);
+
+
 }
 
 .curSinger span{
@@ -89,45 +85,124 @@ p {
 }
 
 .sing {
-	display: flex;
-	height:35px;
+	/*display: flex;*/
+	/*height:35px;*/
+	display: grid;
+	grid-template-columns: 1fr 10fr 10fr 7fr 1fr;
+	/*grid-template-rows: minmax(50px, max-content);*/
+	/*grid-template-rows: repeat(5, 1fr);*/
+	gap: 20px;
+
 	margin: 5px;
 	padding: 10px;
+	padding-right: 5px;
 	background-color: WhiteSmoke;
+}
+
+.box {
+	display: grid;
+	grid-auto-rows: minmax(35px, max-content);
+
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	padding: auto 0;
+	margin: auto 0;
+	vertical-align: center;
+	margin-right: 5px;
+
 }
 
 .singer {
 	display: inline-block;
 	font-size: 22px;
-	width: 70%;
-}
+	width: 90%;
 
+	display: grid;
+	/*grid-area: 1/2/2/5;*/
+}
+/*
 .singer span{
 	padding:  auto 0;
 }
+*/
 
 .nameSong {
 	font-weight: bold;
 	margin-left: 10px;
+
+	display: grid;
+	grid-template-rows: minmax(50px, max-content);
+
 }
 
 .album {
 	display: inline-block;
 	font-size: 22px;
-	width: 15%;
-	margin-left: auto;
+	width: 35%;
+	margin-left: 35%;
 	text-align: center;
+
+	display: grid;
+	/*grid-area: 3/2/4/5;*/
 }
 
 .author {
 	display: inline-block;
 	font-size: 22px;
-	width: 50%;
+	width: 80%;
 	margin-left: auto;
 	text-align: right;
 	margin-right: 20px;
+
+	display: grid;
+	/*grid-area: 2/2/3/5;*/
 }
 
 .likered{
 	color: Crimson;
+}
+
+.fa fa-play psbt{
+	display: grid;
+	/*grid-area: 1/1/4/2;*/
+}
+
+@media screen and (max-width: 960px){
+	.sing {
+	display: grid;
+	grid-template-columns: 1fr 10fr 10fr 7fr 1fr;
+	/*grid-template-rows: minmax(50px, max-content);*/
+	grid-template-rows: repeat(3, 1fr);
+	gap: 20px;
+
+	margin: 5px;
+	padding: 10px;
+	padding-right: 5px;
+	background-color: WhiteSmoke;
+	}
+	.fa fa-play psbt{
+		display: grid;
+		grid-area: 2/1/3/2;
+		align-items: center;
+	}
+	.author {
+		display: grid;
+		grid-area: 2/2/3/5;
+		justify-items: center;
+	}
+	.album {
+		display: grid;
+		grid-area: 3/2/4/5;
+		justify-items: center;
+	}
+	.singer {
+		display: grid;
+		grid-area: 1/2/2/5;
+		justify-items: center;
+	}
+	.fa fa-heart like{
+		display: grid;
+		grid-area: 2/5/3/6;vertical-align: center;
+	}
 }
